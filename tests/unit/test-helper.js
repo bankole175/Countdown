@@ -21,8 +21,16 @@ class TestHelpers {
     this.wrapper.find(selector).trigger("click");
   }
 
-  assertOnNextTick() {
-    this.wrapper.vm.$nextTick();
+  assertOnNextTick(callback, done) {
+    this.wrapper.vm.$nextTick(() => {
+      try {
+        callback();
+
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
   }
 }
 export default TestHelpers;

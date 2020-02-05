@@ -34,26 +34,26 @@ describe("Countdown", () => {
     h.see(30);
   });
 
-  it("reduces the countdown every second", async () => {
+  it("reduces the countdown every second", done => {
     h.see(30);
 
     clock.tick(1000);
 
     // nextTick will update the DOM
-    await h.assertOnNextTick(() => {
+    h.assertOnNextTick(() => {
       h.see(29);
-    });
+    }, done);
   });
 
-  it("confirms that completed is emitted when counter is 0", async () => {
+  it("confirms that completed is emitted when counter is 0", done => {
     clock.tick(30000);
 
-    await h.assertOnNextTick(() => {
+    h.assertOnNextTick(() => {
       expect(wrapper.emitted("completed")).toBeTruthy();
-    });
+    }, done);
   });
 
-  it("clears the interval once completed", async () => {
+  it("clears the interval once completed", () => {
     clock.tick(30000);
 
     expect(wrapper.vm.now.getSeconds()).toBe(30);
