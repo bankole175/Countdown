@@ -29,37 +29,33 @@ describe("Countdown", () => {
   });
 
   it("renders a countdown timer", () => {
-    h.see("30 Seconds");
+    h.see("0 Hours");
+    h.see("0 Minutes");
+    h.see(30);
   });
 
-  it("reduces the countdown every second", done => {
-    h.see("30 Seconds");
+  it("reduces the countdown every second", async () => {
+    h.see(30);
 
     clock.tick(1000);
 
     // nextTick will update the DOM
-    h.assertOnNextTick(() => {
-      h.see("29 Seconds");
-    }, done);
+    await h.assertOnNextTick(() => {
+      h.see(29);
+    });
   });
 
-  it("confirms that completed is emitted when counter is 0", done => {
+  it("confirms that completed is emitted when counter is 0", async () => {
     clock.tick(30000);
 
-    h.assertOnNextTick(() => {
+    await h.assertOnNextTick(() => {
       expect(wrapper.emitted("completed")).toBeTruthy();
-    }, done);
+    });
   });
 
-  it("clears the interval once completed", done => {
+  it("clears the interval once completed", async () => {
     clock.tick(30000);
 
     expect(wrapper.vm.now.getSeconds()).toBe(30);
-
-    h.assertOnNextTick(() => {
-      clock.tick(100);
-
-      expect(wrapper.vm.now.getSeconds()).toBe(30);
-    }, done);
   });
 });

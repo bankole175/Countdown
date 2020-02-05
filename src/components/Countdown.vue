@@ -5,7 +5,7 @@
     <div v-if="!testCompleted">
       <span>{{ remaining.hours() | leftPad }} Hours:</span>
       <span>{{ remaining.minutes() | leftPad }} Minutes:</span>
-      <span>{{ remaining.seconds() | leftPad }} Seconds</span>
+      <span>{{ remaining.seconds() | leftPad }}</span>
     </div>
   </div>
 </template>
